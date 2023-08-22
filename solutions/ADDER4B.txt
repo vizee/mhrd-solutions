@@ -1,0 +1,31 @@
+Inputs: in1[4], in2[4], carryIn;
+Outputs: out[4], carryOut;
+
+// 1. specify the components you want to use here
+Parts:
+  add1 FULLADDER,
+  add2 FULLADDER,
+  add3 FULLADDER,
+  add4 FULLADDER
+;
+
+// 2. wire them up
+Wires:
+  carryIn -> add1.carryIn,
+  in1[1] -> add1.in1,
+  in2[1] -> add1.in2,
+  add1.carryOut -> add2.carryIn,
+  in1[2] -> add2.in1,
+  in2[2] -> add2.in2,
+  add2.carryOut -> add3.carryIn,
+  in1[3] -> add3.in1,
+  in2[3] -> add3.in2,
+  add3.carryOut -> add4.carryIn,
+  in1[4] -> add4.in1,
+  in2[4] -> add4.in2,
+  add1.out -> out[1],
+  add2.out -> out[2],
+  add3.out -> out[3],
+  add4.out -> out[4],
+  add4.carryOut -> carryOut
+;

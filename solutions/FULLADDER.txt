@@ -1,0 +1,27 @@
+Inputs: carryIn, in1, in2;
+Outputs: out, carryOut;
+
+// 1. specify the components you want to use here
+Parts:
+  xor1 XOR,
+  xor2 XOR,
+  and1 AND,
+  and2 AND,
+  or OR
+;
+
+// 2. wire them up
+Wires:
+  in1 -> xor1.in1,
+  in2 -> xor1.in2,
+  xor1.out -> xor2.in1,
+  carryIn -> xor2.in2,
+  in1 -> and1.in1,
+  in2 -> and1.in2,
+  xor1.out -> and2.in1,
+  carryIn -> and2.in2,
+  and1.out -> or.in1,
+  and2.out -> or.in2,
+  xor2.out -> out,
+  or.out -> carryOut
+;

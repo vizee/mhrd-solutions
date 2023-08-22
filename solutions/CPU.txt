@@ -1,0 +1,29 @@
+Inputs: instr[16], data[16], reset;
+Outputs: write, dataAddr[16], instrAddr[16], result[16];
+
+
+// 1. more devices are needed to implement behavior as described in specification
+Parts:
+  decoder DECODER, mr REGISTER16B, ar REGISTER16B, pc COUNTER16B, alu ALU16B,
+  mux1 MUX16B, mux2 MUX16B, mux4w MUX4W16B, mux3 MUX16B, and AND;
+
+// 2. wire them up
+Wires:
+  instr -> decoder.instr,
+  decoder.cToM -> mux1.sel,
+  decoder.constant[1:4] -> mux1.in1[1:4], decoder.constant[5] -> mux1.in1[5:16],
+  decoder.constant -> mux1.in2[1:15],
+  decoder.op1 -> mux2.sel, ar.out -> mux2.in1, mux1.out -> mux2.in2,
+  decoder.op2 -> mux4w.sel, mux1.out -> mux4w.in1, ar.out -> mux4w.in2,
+  mr.out -> mux4w.in3, data -> mux4w.in4,
+  decoder.opCode -> alu.opCode, mux2.out -> alu.in1, mux4w.out -> alu.in2,
+  alu.out -> ar.in, decoder.loadA -> ar.load,
+  decoder.cToM -> mux3.sel, alu.out -> mux3.in1, mux1.out -> mux3.in2,
+  mux3.out -> mr.in, decoder.loadM -> mr.load,
+  decoder.jmpIfZ -> and.in1, alu.zero -> and.in2,
+  mr.out -> pc.in, and.out -> pc.load, reset -> pc.reset,
+  decoder.loadD -> write,
+  alu.out -> result,
+  mr.out -> dataAddr,
+  pc.out -> instrAddr
+;

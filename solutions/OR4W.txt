@@ -1,0 +1,19 @@
+Inputs: in[4];
+Outputs: out;
+
+// 1. specify the components you want to use here
+Parts:
+  not NOT4B,
+  nand1 NAND,
+  nand2 NAND,
+  or OR
+;
+
+// 2. wire them up
+Wires:
+  in -> not.in,
+  not.out[1] -> nand1.in1, not.out[2] -> nand1.in2,
+  not.out[3] -> nand2.in1, not.out[4] -> nand2.in2,
+  nand1.out -> or.in1, nand2.out -> or.in2,
+  or.out -> out
+;

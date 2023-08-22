@@ -1,0 +1,38 @@
+Inputs: in[4], load, reset;
+Outputs: out[4];
+
+// 1. specify the components you want to use here
+Parts:
+  dff1 DFF, dff2 DFF, dff3 DFF, dff4 DFF,
+  add1 HALFADDER, add2 HALFADDER, add3 HALFADDER, add4 HALFADDER,
+  mux1 MUX4B, mux2 MUX4B
+;
+
+// 2. wire them up
+Wires:
+  dff1.out -> add1.in1,
+  1 -> add1.in2,
+  dff2.out -> add2.in1,
+  add1.carry -> add2.in2,
+  dff3.out -> add3.in1,
+  add2.carry -> add3.in2,
+  dff4.out -> add4.in1,
+  add3.carry -> add4.in2,
+  load -> mux1.sel,
+  add1.out -> mux1.in1[1],
+  add2.out -> mux1.in1[2],
+  add3.out -> mux1.in1[3],
+  add4.out -> mux1.in1[4],
+  in -> mux1.in2,
+  reset -> mux2.sel,
+  mux1.out -> mux2.in1,
+  0 -> mux2.in2,
+  dff1.out -> out[1],
+  dff2.out -> out[2],
+  dff3.out -> out[3],
+  dff4.out -> out[4],
+  mux2.out[1] -> dff1.in,
+  mux2.out[2] -> dff2.in,
+  mux2.out[3] -> dff3.in,
+  mux2.out[4] -> dff4.in
+;

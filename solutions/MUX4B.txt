@@ -1,0 +1,22 @@
+Inputs: in1[4], in2[4], sel;
+Outputs: out[4];
+
+// 1. specify the components you want to use here
+Parts:
+  not NOT,
+  nand1 NAND4B,
+  nand2 NAND4B,
+  nand3 NAND4B
+;
+
+// 2. wire them up
+Wires:
+  sel -> not.in,
+  not.out -> nand1.in1,
+  in1 -> nand1.in2,
+  sel -> nand2.in1,
+  in2 -> nand2.in2,
+  nand1.out -> nand3.in1,
+  nand2.out -> nand3.in2,
+  nand3.out -> out
+;

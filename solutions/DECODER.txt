@@ -1,0 +1,29 @@
+Inputs: instr[16];
+Outputs: cToM, loadA, loadD, loadM, op1, op2[2], opCode[4], jmpIfZ, constant[15];
+
+// 1. specify the components you want to use here
+Parts:
+  demux4w DEMUX4W,
+  mux1 MUX4B
+;
+
+// 2. wire them up
+Wires:
+  instr[16] -> cToM,
+  instr[14:15] -> demux4w.sel,
+  1 -> demux4w.in,
+  instr[16] -> mux1.sel,
+  instr[6] -> mux1.in1[1],
+  demux4w.out2 -> mux1.in1[2],
+  demux4w.out3 -> mux1.in1[3],
+  demux4w.out4 -> mux1.in1[4],
+  1 -> mux1.in2[3],
+  mux1.out[1] -> jmpIfZ,
+  mux1.out[2] -> loadA,
+  mux1.out[3] -> loadM,
+  mux1.out[4] -> loadD,
+  instr[13] -> op1,
+  instr[11:12] -> op2,
+  instr[7:10] -> opCode,
+  instr[1:15] -> constant
+;

@@ -1,0 +1,16 @@
+Inputs: in;
+Outputs: out;
+
+// 1. specify the components you want to use here
+Parts:
+  nand NAND
+;
+
+// 2. wire them up
+Wires:
+  in -> nand.in1, in -> nand.in2,
+  nand.out -> out    
+;
+
+
+// press CTRL + ENTER to start verification process

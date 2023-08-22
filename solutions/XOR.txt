@@ -1,0 +1,23 @@
+Inputs: in1, in2;
+Outputs: out;
+
+// 1. specify the components you want to use here
+Parts:
+  nand1 NAND,
+  nand2 NAND,
+  nand3 NAND,
+  nand4 NAND
+;
+
+// 2. wire them up
+Wires:
+  in1 -> nand1.in1,
+  in2 -> nand1.in2,
+  nand1.out -> nand2.in1,
+  in1 -> nand2.in2,
+  nand1.out -> nand3.in1,
+  in2 -> nand3.in2,
+  nand2.out -> nand4.in1,
+  nand3.out -> nand4.in2,
+  nand4.out -> out
+;
